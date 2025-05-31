@@ -1,4 +1,4 @@
-import { User } from '../users/users.interface';
+import { User } from '../users/types/users.interface';
 
 const users: User[] = [];
 
