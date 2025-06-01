@@ -12,36 +12,53 @@ import {
   Put,
 } from '@nestjs/common';
 import TracksService from './tracks.service';
+import Track from './dto/tracks.dto';
 import CreateTrackDto from './dto/create-track.dto';
-import ITrack from './types/track.interface';
+
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiNoContentResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import UpdateTrackDto from './dto/update-track..dto';
 
+@ApiTags('track')
 @Controller('track')
 export class TracksController {
   constructor(private tracksService: TracksService) {}
 
   @Get()
-  async findTracks(): Promise<ITrack[]> {
+  @ApiOkResponse({ description: 'All founded.' })
+  async findTracks(): Promise<Track[]> {
     return this.tracksService.getTracks();
   }
 
   @Get(':id')
-  async findTrack(@Param('id', ParseUUIDPipe) id: string): Promise<ITrack> {
+  @ApiNotFoundResponse({ description: 'Track not found.' })
+  @ApiOkResponse({ type: Track, description: 'Track found.' })
+  async findTrack(@Param('id', ParseUUIDPipe) id: string): Promise<Track> {
     const track = await this.tracksService.getTrackById(id);
     if (track) return track;
     throw new NotFoundException(`Track with id ${id} not found`);
   }
 
   @Post()
-  async createTrack(@Body() createTrackDto: CreateTrackDto): Promise<ITrack> {
+  @ApiBadRequestResponse({ description: 'Incorrect body.' })
+  @ApiCreatedResponse({ type: Track, description: 'Track created.' })
+  async createTrack(@Body() createTrackDto: CreateTrackDto): Promise<Track> {
     return this.tracksService.createTrack(createTrackDto);
   }
 
   @Put(':id')
+  @ApiNotFoundResponse({ description: 'Track not found.' })
+  @ApiOkResponse({ type: Track, description: 'Track changed.' })
   async updateTrack(
     @Body() updateTrackDto: UpdateTrackDto,
     @Param('id', ParseUUIDPipe) id: string,
-  ): Promise<ITrack> {
+  ): Promise<Track> {
     const trackToUpdate = await this.tracksService.updateTrack(
       id,
       updateTrackDto,
@@ -51,6 +68,8 @@ export class TracksController {
   }
 
   @Delete(':id')
+  @ApiNotFoundResponse({ description: 'Track not found.' })
+  @ApiNoContentResponse({ description: 'Track deleted.' })
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteTrack(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     return this.tracksService.deleteTrack(id);

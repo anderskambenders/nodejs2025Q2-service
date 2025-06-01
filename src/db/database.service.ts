@@ -6,13 +6,13 @@ import Favorite from '../favorites/types/favorite.type';
 import { UpdatePasswordDto } from '../users/dto/update-user.dto';
 import UpdateAlbumDto from '../albums/dto/update-album.dto';
 import UpdateArtistDto from '../artists/dto/update-artist.dto';
-import ITrack from '../tracks/types/track.interface';
 import UpdateTrackDto from '../tracks/dto/update-track..dto';
+import Track from '../tracks/dto/tracks.dto';
 
 @Injectable()
 export class DataService {
   private users: User[] = [];
-  private tracks: ITrack[] = [];
+  private tracks: Track[] = [];
   private artists: Artist[] = [];
   private albums: IAlbum[] = [];
   private favorites: Favorite = {
@@ -171,15 +171,15 @@ export class DataService {
     return true;
   }
 
-  public async getTracks(): Promise<ITrack[]> {
+  public async getTracks(): Promise<Track[]> {
     return this.tracks;
   }
 
-  public async getTrackById(id: string): Promise<ITrack | undefined> {
+  public async getTrackById(id: string): Promise<Track | undefined> {
     return this.tracks.find((track) => track.id == id);
   }
 
-  public async createTrack(newTrack: ITrack): Promise<ITrack> {
+  public async createTrack(newTrack: Track): Promise<Track> {
     this.tracks.push(newTrack);
     return newTrack;
   }
@@ -187,7 +187,7 @@ export class DataService {
   public async updateTrack(
     id: string,
     updateTrackDto: UpdateTrackDto,
-  ): Promise<ITrack> {
+  ): Promise<Track> {
     const index = this.tracks.findIndex((track) => track.id === id);
     const newTrack = {
       ...this.tracks[index],

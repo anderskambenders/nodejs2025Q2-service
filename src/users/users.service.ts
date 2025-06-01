@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { User } from './entities/users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { v4 } from 'uuid';
 import { UpdatePasswordDto } from './dto/update-user.dto';
-import { DataService } from 'src/db/database.service';
+import { DataService } from '../db/database.service';
+import { User } from './entities/users.entity';
 
 @Injectable()
 class UsersService {
