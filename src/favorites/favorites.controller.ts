@@ -23,16 +23,6 @@ export class FavoritesController {
     return this.favoritesService.findAll();
   }
 
-  @Post('/track/:id')
-  @HttpCode(HttpStatus.CREATED)
-  @Header('content-type', 'application/json')
-  addTrack(@Param('id') id: string) {
-    if (!isUUID(id))
-      throw new HttpException('ID is not UUID', HttpStatus.BAD_REQUEST);
-    this.favoritesService.addTrack(id);
-    return this.favoritesService.findOne(id);
-  }
-
   @Post('/album/:id')
   @HttpCode(HttpStatus.CREATED)
   @Header('content-type', 'application/json')
