@@ -1,5 +1,4 @@
-import { User } from '../users/types/users.interface';
-
-const users: User[] = [];
+import IUser from '../users/types/users.interface';
+const users: IUser[] = [];
 
 export default users;
