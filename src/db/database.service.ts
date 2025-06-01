@@ -1,20 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import Artist from '../artists/types/artists.interface';
+
 import { User } from '../users/entities/users.entity';
-import IAlbum from '../albums/types/album.interface';
 import Favorite from '../favorites/types/favorite.type';
 import { UpdatePasswordDto } from '../users/dto/update-user.dto';
 import UpdateAlbumDto from '../albums/dto/update-album.dto';
 import UpdateArtistDto from '../artists/dto/update-artist.dto';
 import UpdateTrackDto from '../tracks/dto/update-track..dto';
 import Track from '../tracks/dto/tracks.dto';
+import Album from '../albums/dto/album.dto';
+import Artist from '../artists/dto/aritsts.dto';
 
 @Injectable()
 export class DataService {
   private users: User[] = [];
   private tracks: Track[] = [];
   private artists: Artist[] = [];
-  private albums: IAlbum[] = [];
+  private albums: Album[] = [];
   private favorites: Favorite = {
     artists: [],
     tracks: [],
@@ -111,15 +112,15 @@ export class DataService {
     return true;
   }
 
-  public async getAlbums(): Promise<IAlbum[]> {
+  public async getAlbums(): Promise<Album[]> {
     return this.albums;
   }
 
-  public async getAlbumById(id: string): Promise<IAlbum | undefined> {
+  public async getAlbumById(id: string): Promise<Album | undefined> {
     return this.albums.find((track) => track.id == id);
   }
 
-  public async createAlbum(newAlbum: IAlbum): Promise<IAlbum> {
+  public async createAlbum(newAlbum: Album): Promise<Album> {
     this.albums.push(newAlbum);
     return newAlbum;
   }
@@ -127,7 +128,7 @@ export class DataService {
   public async updateAlbum(
     id: string,
     updateAlbumDto: UpdateAlbumDto,
-  ): Promise<IAlbum> {
+  ): Promise<Album> {
     const index = this.albums.findIndex((album) => album.id === id);
     const newAlbum = {
       ...this.albums[index],

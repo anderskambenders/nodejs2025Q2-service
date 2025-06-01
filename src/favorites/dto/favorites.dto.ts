@@ -1,9 +1,9 @@
+import Artist from '../../artists/dto/aritsts.dto';
 import Track from '../../tracks/dto/tracks.dto';
-import IAlbum from '../../albums/types/album.interface';
-import IArtist from '../../artists/types/artists.interface';
+import IAlbum from '../../albums/dto/album.dto';
 
 class FavoriteResponseDto {
-  artists: IArtist[] = [];
+  artists: Artist[] = [];
   albums: IAlbum[] = [];
   tracks: Track[] = [];
 }
