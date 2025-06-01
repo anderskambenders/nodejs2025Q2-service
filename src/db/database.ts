@@ -1,4 +1,4 @@
-import IUser from '../users/types/users.interface';
-const users: IUser[] = [];
+import { User } from '../users/entities/users.entity';
+const users: User[] = [];
 
 export default users;
