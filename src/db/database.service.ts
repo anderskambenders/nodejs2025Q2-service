@@ -8,7 +8,7 @@ import UpdateArtistDto from '../artists/dto/update-artist.dto';
 import UpdateTrackDto from '../tracks/dto/update-track..dto';
 import Track from '../tracks/dto/tracks.dto';
 import Album from '../albums/dto/album.dto';
-import Artist from '../artists/dto/aritsts.dto';
+import Artist from '../artists/dto/artists.dto';
 
 @Injectable()
 export class DataService {

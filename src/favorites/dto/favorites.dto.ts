@@ -1,4 +1,4 @@
-import Artist from '../../artists/dto/aritsts.dto';
+import Artist from '../../artists/dto/artists.dto';
 import Track from '../../tracks/dto/tracks.dto';
 import IAlbum from '../../albums/dto/album.dto';
 
