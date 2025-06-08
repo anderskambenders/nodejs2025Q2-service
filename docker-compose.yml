@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   app:
-    image: anderskambenders/nodejs2024q1-service-app
+    image: anderskambenders/nodejs2025q2-service-app
     restart: always
     build:
       context: .
@@ -12,15 +12,15 @@ services:
     env_file:
       - .env
     networks:
-      - nodejs2024q1
+      - nodejs2025q2
     volumes:
       - ./:/usr/app
       - /usr/app/node_modules
     command: ["npm", "run", "migrate:start:dev"]
 
   postgres:
-    container_name: nodejs2024q1-service-db
-    image: anderskambenders/nodejs2024q1-service-db
+    container_name: nodejs2025q2-service-db
+    image: anderskambenders/nodejs2025q2-service-db
     restart: always
     build:
       context: .
@@ -36,7 +36,7 @@ services:
     ports:
       - '${DB_PORT}:${DB_PORT}'
     networks:
-      - nodejs2024q1
+      - nodejs2025q2
     env_file:
       - .env
     healthcheck:
@@ -50,5 +50,5 @@ volumes:
   postgres:
 
 networks:
-  nodejs2024q1:
+  nodejs2025q2:
     driver: bridge
