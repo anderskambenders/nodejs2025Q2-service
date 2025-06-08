@@ -16,7 +16,6 @@ import {
 import UsersService from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-user.dto';
-import { UserResponse } from './entities/users.entity';
 
 @Controller('user')
 class UsersController {
@@ -24,15 +23,11 @@ class UsersController {
 
   @Get()
   async findUsers() {
-    return (await this.usersService.getAllUsers()).map(
-      (user) => new UserResponse(user),
-    );
+    return this.usersService.getAllUsers();
   }
 
   @Get(':id')
-  async findUser(
-    @Param('id', ParseUUIDPipe) id: string,
-  ): Promise<UserResponse> {
+  async findUser(@Param('id', ParseUUIDPipe) id: string) {
     const user = await this.usersService.getUserById(id);
     if (user) return user;
     throw new NotFoundException(`User with id ${id} not found`);
@@ -42,11 +37,9 @@ class UsersController {
   @Header('content-type', 'application/json')
   @HttpCode(HttpStatus.CREATED)
   @Header('content-type', 'application/json')
-  async createUser(
-    @Body() createUserDto: CreateUserDto,
-  ): Promise<UserResponse> {
+  async createUser(@Body() createUserDto: CreateUserDto) {
     const newUser = await this.usersService.createUser(createUserDto);
-    if (newUser) return new UserResponse(newUser);
+    if (newUser) return newUser;
     throw new InternalServerErrorException('Something went wrong');
   }
 
@@ -54,14 +47,15 @@ class UsersController {
   async updateUser(
     @Body() updatePasswordDto: UpdatePasswordDto,
     @Param('id', ParseUUIDPipe) id: string,
-  ): Promise<UserResponse> {
+  ) {
     const userToUpdate = await this.usersService.updateUserPassword(
       id,
       updatePasswordDto,
     );
-    if (userToUpdate) return new UserResponse(userToUpdate);
+    if (userToUpdate) return userToUpdate;
     throw new NotFoundException(`User with id ${id} not found`);
   }
+
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async deleteUser(@Param('id', ParseUUIDPipe) id: string) {

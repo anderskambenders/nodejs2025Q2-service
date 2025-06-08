@@ -3,16 +3,16 @@ export class User {
   login: string;
   password: string;
   version: number;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class UserResponse {
   id: string;
   login: string;
   version: number;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: Date;
+  updatedAt: Date;
 
   constructor(user: User) {
     this.id = user.id;
