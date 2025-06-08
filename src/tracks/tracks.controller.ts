@@ -14,7 +14,6 @@ import {
 import TracksService from './tracks.service';
 import Track from './dto/tracks.dto';
 import CreateTrackDto from './dto/create-track.dto';
-
 import UpdateTrackDto from './dto/update-track..dto';
 
 @Controller('track')
@@ -22,12 +21,12 @@ export class TracksController {
   constructor(private tracksService: TracksService) {}
 
   @Get()
-  async findTracks(): Promise<Track[]> {
+  async findTracks() {
     return this.tracksService.getTracks();
   }
 
   @Get(':id')
-  async findTrack(@Param('id', ParseUUIDPipe) id: string): Promise<Track> {
+  async findTrack(@Param('id', ParseUUIDPipe) id: string) {
     const track = await this.tracksService.getTrackById(id);
     if (track) return track;
     throw new NotFoundException(`Track with id ${id} not found`);
