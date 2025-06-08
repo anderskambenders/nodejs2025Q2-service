@@ -7,7 +7,7 @@ class CreateAlbumDto {
   year: number;
   @IsOptional()
   @IsUUID()
-  artist?: string | null;
+  artistId?: string | null;
 }
 
 export default CreateAlbumDto;
