@@ -12,7 +12,6 @@ import {
   Put,
 } from '@nestjs/common';
 import ArtistsService from './artists.service';
-import IArtist from './dto/artists.dto';
 import CreateArtistDto from './dto/create-artist.dto';
 import UpdateArtistDto from './dto/update-artist.dto';
 
@@ -21,12 +20,12 @@ class ArtistsController {
   constructor(private artistService: ArtistsService) {}
 
   @Get()
-  async findArtists(): Promise<IArtist[]> {
+  async findArtists() {
     return this.artistService.getArtists();
   }
 
   @Get(':id')
-  async findArtist(@Param('id', ParseUUIDPipe) id: string): Promise<IArtist> {
+  async findArtist(@Param('id', ParseUUIDPipe) id: string) {
     const artist = await this.artistService.getArtistById(id);
     if (artist) return artist;
     throw new NotFoundException(`Artist with id ${id} not found`);
@@ -34,9 +33,7 @@ class ArtistsController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async createArtist(
-    @Body() createArtistDto: CreateArtistDto,
-  ): Promise<IArtist> {
+  async createArtist(@Body() createArtistDto: CreateArtistDto) {
     return this.artistService.createArtist(createArtistDto);
   }
 
@@ -44,7 +41,7 @@ class ArtistsController {
   async updateArtist(
     @Body() updateArtistDto: UpdateArtistDto,
     @Param('id', ParseUUIDPipe) id: string,
-  ): Promise<IArtist> {
+  ) {
     const artist = await this.artistService.updateArtist(id, updateArtistDto);
     if (artist) return artist;
     throw new NotFoundException(`Artist with id:${id} not found`);
