@@ -1,4 +1,4 @@
-FROM node:20.11-alpine
+FROM node:22.16-alpine
 WORKDIR /app
 COPY . .
 RUN npm ci --legacy-peer-deps && npm cache clean --force
