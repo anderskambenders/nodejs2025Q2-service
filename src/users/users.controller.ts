@@ -12,11 +12,14 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import UsersService from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-user.dto';
+import { JwtGuard } from 'src/auth/guard/auth.guard';
 
+@UseGuards(JwtGuard)
 @Controller('user')
 class UsersController {
   constructor(private usersService: UsersService) {}

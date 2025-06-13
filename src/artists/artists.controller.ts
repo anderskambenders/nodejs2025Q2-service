@@ -10,12 +10,15 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import ArtistsService from './artists.service';
 import CreateArtistDto from './dto/create-artist.dto';
 import UpdateArtistDto from './dto/update-artist.dto';
+import { JwtGuard } from 'src/auth/guard/auth.guard';
 
 @Controller('artist')
+@UseGuards(JwtGuard)
 class ArtistsController {
   constructor(private artistService: ArtistsService) {}
 

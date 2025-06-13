@@ -8,6 +8,7 @@ import { User } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { compare, hash } from 'bcrypt';
 
 @Injectable()
 class UsersService {
@@ -30,7 +31,14 @@ class UsersService {
   }
 
   public async createUser(user: CreateUserDto) {
-    const userToDb = await this.prismaDB.user.create({ data: user });
+    const salt = parseInt(process.env.CRYPT_SALT) || 10;
+    const hashedPassword = await hash(user.password, salt);
+    const userToDb = await this.prismaDB.user.create({
+      data: {
+        login: user.login,
+        password: hashedPassword,
+      },
+    });
     return this.formatUser(userToDb);
   }
 
@@ -42,11 +50,14 @@ class UsersService {
       where: { id },
     });
     if (!user) return;
-    if (user.password === oldPassword) {
+    const passwordValid = await compare(oldPassword, user.password);
+    if (passwordValid) {
+      const salt = parseInt(process.env.CRYPT_SALT) || 10;
+      const hashedPassword = await hash(newPassword, salt);
       const updatedUser = await this.prismaDB.user.update({
         where: { id },
         data: {
-          password: newPassword,
+          password: hashedPassword,
           version: {
             increment: 1,
           },
