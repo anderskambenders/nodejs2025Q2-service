@@ -10,11 +10,14 @@ import {
   UnprocessableEntityException,
   NotFoundException,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import FavoritesService from './favorites.service';
 import FavoriteResponseDto from './dto/favorites.dto';
 import { isUUID } from 'class-validator';
+import { JwtGuard } from 'src/auth/guard/auth.guard';
 
+@UseGuards(JwtGuard)
 @Controller('favs')
 export class FavoritesController {
   constructor(private readonly favoritesService: FavoritesService) {}
