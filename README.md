@@ -34,18 +34,8 @@ For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
 ## Testing
 
-After application running open new terminal and enter:
-
-To run all tests without authorization
-
 ```
-npm run test
-```
-
-To run only one of all test suites
-
-```
-npm run test -- <path to suite>
+To test authorization run: `npm run test:auth`
 ```
 
 ### Auto-fix and format
@@ -92,6 +82,15 @@ Press <kbd>F5</kbd> to debug.
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 
 ## Endpoints
+
+### Auth
+
+ - `Signup` (`auth/signup` route)
+  - **POST** auth/signup - send `login` and `password` to create a new `user`
+- `Login` (`auth/login` route)
+  - **POST** auth/login - send `login` and `password` to get Access token and Refresh token (optionally)
+- `Refresh` (`auth/refresh` route)
+  - **POST** auth/refresh - send refresh token in body as `{ refreshToken }` to get new pair of Access token and Refresh token
 
 ### Users
  - GET /user: Get all users
